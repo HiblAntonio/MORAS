@@ -1,0 +1,10 @@
+CHIP Zad1a{
+  IN x, y, z;
+  OUT out;
+
+  PARTS:
+  Not(in = x, out = notX);
+  Not(in = y, out = notY);
+ 
+  Or(a = notX, b = notY, out = out);
+}
