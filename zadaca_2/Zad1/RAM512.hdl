@@ -1,0 +1,24 @@
+CHIP RAM512{
+  //Implementirajte sklop RAM512 kojemu su ulaz 16-bitna sabirnica in, 9-bitna sabirnica addr te 1-bitna sabirnica load, a izlaz 16-bitna sabirnica out
+  //Sklop RAM512 predstavlja radnu memoriju koja sadrži 512 memorijskih adresa. Ukoliko je load = 1, vrijednost sabirnice in upisuje se u memoriju na adresu addr
+  //Za bilo koju vrijednost load-a vratite vrijednost na memorijskoj adresi addr putem sabirnice out
+
+  IN in[16], addr[9], load;
+  OUT out[16];
+
+  PARTS:
+  //1 in, 8 outputs
+  DMux8Way(in = load, sel = addr[6..8], a = outA, b = outB, c = outC, d = outD, e = outE, f = outF, g = outG, h = outH);
+
+
+  RAM64(in = in, load = outA, address = addr[0..5], out = outRAMA);
+  RAM64(in = in, load = outB, address = addr[0..5], out = outRAMB);
+  RAM64(in = in, load = outC, address = addr[0..5], out = outRAMC);
+  RAM64(in = in, load = outD, address = addr[0..5], out = outRAMD);
+  RAM64(in = in, load = outE, address = addr[0..5], out = outRAME);
+  RAM64(in = in, load = outF, address = addr[0..5], out = outRAMF);
+  RAM64(in = in, load = outG, address = addr[0..5], out = outRAMG);
+  RAM64(in = in, load = outH, address = addr[0..5], out = outRAMH);
+ 
+  Mux8Way16(a = outRAMA, b = outRAMB, c = outRAMC, d = outRAMD, e = outRAME, f = outRAMF, g = outRAMG, h = outRAMH, sel = addr[6..8], out = out);
+}

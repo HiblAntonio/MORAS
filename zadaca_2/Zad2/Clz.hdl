@@ -1,0 +1,75 @@
+CHIP Clz{
+  //Jedna 16-bitna sabirnica in te na izlazu jednu 16 bitnu sabirnicu out
+  //Čip vraća broj uzaspotnih nula počevši od najsignifikantnijeg bita
+
+  IN in[16];
+  OUT out[16];
+
+  // Provjera MSB, okretanje vrijednosti i zbrajanje s prethodnim rezultatima
+  // Ukoliko je MSB 1, chip And vraća vrijednost 0 ne zbraja naredne bitove
+
+  PARTS:
+  And(a = in[15], b = true, out = outBit1);
+  Not(in = outBit1, out = outBit1False);
+  Add16(a[0] = outBit1False, a[1..15] = false, b = false, out = sum1MSB); 
+  And(a = in[14], b = true, out = outBit2);
+  Not(in = outBit2, out = outBit2False);
+  And(a = outBit2False, b = outBit1False, out = outCheck1);
+  Add16(a[0] = outCheck1, a[1..15] = false, b = sum1MSB, out = sum2MSB);
+  And(a = in[13], b = true, out = outBit3);
+  Not(in = outBit3, out = outBit3False);
+  And(a = outBit3False, b = outCheck1, out = outCheck2);
+  Add16(a[0] = outCheck2, a[1..15] = false, b = sum2MSB, out = sum3MSB);
+  And(a = in[12], b = true, out = outBit4);
+  Not(in = outBit4, out = outBit4False);
+  And(a = outBit4False, b = outCheck2, out = outCheck3);
+  Add16(a[0] = outCheck3, a[1..15] = false, b = sum3MSB, out = sum4MSB);
+  And(a = in[11], b = true, out = outBit5);
+  Not(in = outBit5, out = outBit5False);
+  And(a = outBit5False, b = outCheck3, out = outCheck4);
+  Add16(a[0] = outCheck4, a[1..15] = false, b = sum4MSB, out = sum5MSB);
+  And(a = in[10], b = true, out = outBit6);
+  Not(in = outBit6, out = outBit6False);
+  And(a = outBit6False, b = outCheck4, out = outCheck5);
+  Add16(a[0] = outCheck5, a[1..15] = false, b = sum5MSB, out = sum6MSB);
+  And(a = in[9], b = true, out = outBit7);
+  Not(in = outBit7, out = outBit7False);
+  And(a = outBit7False, b = outCheck5, out = outCheck6);
+  Add16(a[0] = outCheck6, a[1..15] = false, b = sum6MSB, out = sum7MSB);
+  And(a = in[8], b = true, out = outBit8);
+  Not(in = outBit8, out = outBit8False);
+  And(a = outBit8False, b = outCheck6, out = outCheck7);
+  Add16(a[0] = outCheck7, a[1..15] = false, b = sum7MSB, out = sum8MSB);
+  And(a = in[7], b = true, out = outBit9); 
+  Not(in = outBit9, out = outBit9False);
+  And(a = outBit9False, b = outCheck7, out = outCheck8);
+  Add16(a[0] = outCheck8, a[1..15] = false, b = sum8MSB, out = sum9MSB);
+  And(a = in[6], b = true, out = outBit10);
+  Not(in = outBit10, out = outBit10False);
+  And(a = outBit10False, b = outCheck8, out = outCheck9);
+  Add16(a[0] = outCheck9, a[1..15] = false, b = sum9MSB, out = sum10MSB);
+  And(a = in[5], b = true, out = outBit11);
+  Not(in = outBit11, out = outBit11False);
+  And(a = outBit11False, b = outCheck9, out = outCheck10);
+  Add16(a[0] = outCheck10, a[1..15] = false, b = sum10MSB, out = sum11MSB);
+  And(a = in[4], b = true, out = outBit12);
+  Not(in = outBit12, out = outBit12False);
+  And(a = outBit12False, b = outCheck10, out = outCheck11);
+  Add16(a[0] = outCheck11, a[1..15] = false, b = sum11MSB, out = sum12MSB);
+  And(a = in[3], b = true, out = outBit13);
+  Not(in = outBit13, out = outBit13False);
+  And(a = outBit13False, b = outCheck11, out = outCheck12);
+  Add16(a[0] = outCheck12, a[1..15] = false, b = sum12MSB, out = sum13MSB);
+  And(a = in[2], b = true, out = outBit14);
+  Not(in = outBit14, out = outBit14False);
+  And(a = outBit15False, b = outCheck12, out = outCheck13);
+  Add16(a[0] = outCheck13, a[1..15] = false, b = sum13MSB, out = sum14MSB);
+  And(a = in[1], b = true, out = outBit15);
+  Not(in = outBit15, out = outBit15False);
+  And(a = outBit15False, b = outCheck13, out = outCheck14);
+  Add16(a[0] = outCheck14, a[1..15] = false, b = sum14MSB, out = sum15MSB);
+  Or(a = in[0], b = true, out = outBit16);
+  Not(in = outBit16, out = outBit16False);
+  And(a = outBit16False, b = outCheck14, out = outCheck15);
+  Add16(a[0] = outCheck15, a[1..15] = false, b = sum15MSB, out = out);
+}
