@@ -1,0 +1,42 @@
+function Pell.pell 1
+
+// 2Pn - 1 + Pn-2
+
+label LOOP_START
+  push argument 0
+  push constant 0
+  eq
+  if-goto RETURN_ZERO 
+
+  push argument 0
+  push constant 1
+  eq
+  if-goto RETURN_ONE
+
+  push local 0
+  push constant 1
+  sub
+  call pell.pell 1
+  pop local 1
+  push local 1
+  push local 1
+  add
+
+  push local 0
+  push constant 2
+  sub
+  call pell.pell 1
+
+  add
+  goto END
+
+label RETURN_ZERO
+  push constant 0
+  goto END
+
+label RETURN_ONE
+  push constant 1
+  goto END
+
+label END
+  return

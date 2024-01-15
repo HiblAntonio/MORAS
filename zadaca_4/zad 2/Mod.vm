@@ -1,0 +1,28 @@
+function Mod.mod 2
+
+  push constant 0
+  pop local 0
+  push argument 0
+  pop local 1
+
+  label LOOP_START
+  push local 1
+  push argument 1
+  lt
+  if-goto END
+  
+  push local 0
+  push constant 1
+  add
+  pop local 0
+
+  push local 1
+  push argument 1
+  sub
+  pop local 1
+
+  goto LOOP_START
+
+label END
+push local 1
+return

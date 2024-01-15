@@ -1,0 +1,36 @@
+function Max.max 3
+  // 3 argumenta
+  // if (a > b) && (a > c) a = max
+  // if (b > a) && (b > c) b = max
+  // if (c > a) && (c > b) c = max
+push argument 0
+push argument 1
+gt
+push argument 0
+push argument 2
+gt
+and
+if-goto RETURN_A
+
+push argument 1
+push argument 0
+gt
+push argument 1
+push argument 2
+gt
+and
+if-goto RETURN_B
+
+goto RETURN_C
+
+label RETURN_A
+push argument 0
+return
+
+label RETURN_B
+push argument 1
+return
+
+label RETURN_C
+push argument 2
+return
