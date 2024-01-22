@@ -1,0 +1,47 @@
+class Graph
+{
+    // f : Int -> Int
+    // [-32, 32] x [-32, 32] = (x, f(x))
+    // Vrijednosti izvan segmenta [-32, 32] smatrati prekidima
+
+    function void drawingAxes()
+    {
+        // Screen is 512 x 256
+
+        // x axis
+        do Screen.drawLine(0, 128, 255, 128);
+
+        // y axis
+        do Screen.drawLine(128, 0, 128, 255);
+
+        return;
+    }
+
+    // example of a function f: x -> x^2
+    function int f(int x)
+    {
+        return x;
+    }
+
+    function void draw()
+    {   
+        var int i;
+        // iscrtati koordinatne osi (u kvadratu veličine 256x256)
+        // te graf funkcije
+        
+        do Graph.drawingAxes();
+
+        let i = -32;
+        while (~(i > 32))
+        {
+            if(~(Graph.f(i) < (-32)) & ~(Graph.f(i) > 32))
+            {
+            do Screen.drawPixel(128 + i, 128 - Graph.f(i));
+            }
+
+            let i = i + 1;
+        }
+
+        return;
+    }
+}

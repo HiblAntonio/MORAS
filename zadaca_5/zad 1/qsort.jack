@@ -1,0 +1,91 @@
+class qsort
+{
+    function void printArray(Array numbers, int arrayLength)
+    {
+        var int i;
+        let i = 0;
+
+        while (i < arrayLength)
+        {
+            do Output.printInt(numbers[i]);
+            do Output.printString(" ");
+            let i = i + 1;
+        }
+
+        return;
+    }
+
+
+    function int partition(Array numbers, int l, int h)
+    {
+        var int pivot, i, j, temp;
+
+        // pivot je zadnji element niza (high)
+        let pivot = numbers[h];
+        let i = l - 1;
+        let j = l;
+
+        while (j < h)
+        {
+            if ((numbers[j] < pivot) | (numbers[j] = pivot))
+            {
+                let i = i + 1;
+
+                let temp = numbers[i];
+                let numbers[i] = numbers[j];
+                let numbers[j] = temp;
+            }
+            let j = j + 1;
+        }
+
+        let temp = numbers[i + 1];
+        let numbers[i + 1] = numbers[h];
+        let numbers[h] = temp;
+
+        return (i + 1);
+    }
+
+    function void quickSort(Array numbers, int l, int h)
+    {
+        var int pivot;
+        if (l < h)
+        {
+            let pivot = qsort.partition(numbers, l, h);
+
+            do qsort.quickSort(numbers, l, pivot - 1);
+            do qsort.quickSort(numbers, pivot + 1, h);
+        }
+
+        return;
+    }
+
+    function void main()
+    {
+        // Pomoću "do" se poziva funkcija
+        var Array numbers;
+        var int arrayLength, i;
+
+        let arrayLength = Keyboard.readInt("Number of elements? ");
+        let numbers = Array.new(arrayLength);
+        let i = 0;
+
+        while (i < arrayLength)
+        {
+            // ??
+            let numbers[i] = Keyboard.readInt("Number: ");
+            let i = i + 1;
+        }
+
+        do Output.printString("Original array: ");
+        do qsort.printArray(numbers, arrayLength);
+
+        do qsort.quickSort(numbers, 0, arrayLength);
+
+        do Output.printString("Sorted array: ");
+        do qsort.printArray(numbers, arrayLength);
+
+        do a.dispose();
+        // Na kraju svake funkcije!
+        return;
+    }
+}

@@ -1,0 +1,147 @@
+class vint
+{
+    // dinamičko polje cijelih brojeva (vector<int>)
+    field int capacity;
+    field Array arr;
+
+    constructor vint new(int n){
+        if(n < 0) {
+            let capacity = 1;
+            let arr = Array.new(1);
+            return this;
+        }
+        
+        let capacity = vint.powTwo(n);
+        // 5 - 32
+        let arr = Array.new(capacity);
+        return this;
+    }
+
+    method void dispose() {
+        do arr.dispose();
+        return;
+    }
+
+    method int len(){
+        return capacity;
+    }
+
+    // constructor?
+    function int powTwo(int n){
+        var int i, result;
+        let i = 0;
+        let result = 1;
+
+        while (i < n)
+        {
+            let result = result + result;
+            let i = i + 1;
+        }
+        
+        return result;
+    }
+
+    method void set(int k, int v){
+        let arr[k] = v;
+        return;
+    }
+
+    method int get(int k){
+        return arr[k];
+    }
+
+    // kapacitet stavlja na powTwo(m)
+    // prilikom promjene duljine polja, čuvaju se elementi na indeksima
+    method void resize(int m){
+        var int t, i, minimum;
+        var Array newArr;
+
+        if(m < 0) {
+            let t = arr[0];
+            do arr.dispose();
+            let capacity = 1;
+            let arr = Array.new(1);
+            let arr[0] = t;
+            return;
+        }
+        let t = vint.powTwo(m);
+        let minimum = Math.min(capacity, t);
+
+        let newArr = Array.new(t);
+        let i = 0;
+
+        while(i < minimum) {
+            let newArr[i] = arr[i];
+            let i = i+1;
+        }
+        do arr.dispose();
+        let capacity = t;
+        let arr = newArr;
+        return;
+    }
+
+    // ista duljina i na istim indeksima im se nalaze
+    // elementi iste vrijednosti
+    function boolean is_eq(vint A, vint B){
+        var int i;
+
+        // Check length
+        if(~(A.len() = B.len())) {
+            return false;
+        }
+
+        // Check equal elements in the same spot
+        let i = 0;
+        while(i < A.len()) {
+            if(~(A.get(i) = B.get(i))) {
+                return false;
+            }
+            let i = i+1;
+        }
+
+        return true;
+    }
+
+    method void sort() {
+        do qsort.quickSort(arr, 0, (capacity-1));
+
+        return;
+    }
+
+    // ako su vektori istih duljina i imaju sve elemente istih vrijenosti vraća true
+    // elementi ne moraju biti u istom poretku
+    function boolean elems(vint A, vint B){
+        var bool res;
+
+        // Check length
+        if(~(A.len() = B.len())) {
+            return false;
+        }
+
+        // sort using the quick-sort algorithm implemented in the previous task
+        do A.sort();
+        do B.sort();
+
+        let res = vint.is_eq(A, B);
+
+        do A.dispose();
+        do B.dispose();
+
+        return res;
+    }
+
+    method void print(){
+        var int i;
+        let i = 0;
+
+        while(i < len())
+        {
+            do Output.printInt(arr[i]);
+            do Output.printString(" ");
+
+            let i = i + 1;
+        }
+
+        return;
+    }
+}
